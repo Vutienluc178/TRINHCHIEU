@@ -2,28 +2,1543 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trình chiếu bài giảng</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- MathJax cho công thức Toán -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình Chiếu Toán Học - LaTeX to Slides</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .input-section h2 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .latex-input {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .latex-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+        }
+
+        .preview-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .slide-container {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            min-height: 600px;
+            padding: 50px;
+            position: relative;
+            overflow-y: auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .slide {
+            display: none;
+            animation: slideIn 0.5s ease-in-out;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide h3 {
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 3rem;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .slide-content {
+            line-height: 1.6;
+            font-size: 3rem;
+            text-align: left;
+            width: 100%;
+        }
+
+        .slide-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .slide-content ul, .slide-content ol {
+            margin: 20px 0;
+            padding-left: 40px;
+        }
+
+        .slide-content p {
+            margin-bottom: 20px;
+            font-size: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .slide-content li {
+            margin-bottom: 15px;
+            font-size: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .slide-counter {
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .fullscreen-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #1a202c;
+            color: white;
+            display: none;
+            z-index: 1000;
+        }
+
+        .fullscreen-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100vh;
+            padding: 60px;
+            text-align: left;
+            overflow-y: auto;
+        }
+
+        .fullscreen-slide h3 {
+            font-size: 4rem;
+            margin-bottom: 40px;
+            color: #667eea;
+            text-align: left;
+            width: 100%;
+        }
+
+        .fullscreen-slide .slide-content {
+            font-size: 3rem;
+            max-width: 100%;
+            line-height: 1.4;
+            text-align: left;
+            width: 100%;
+        }
+
+        .fullscreen-slide .slide-content img {
+            max-width: 80%;
+            height: auto;
+            margin: 30px 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .fullscreen-slide .slide-content ul, .fullscreen-slide .slide-content ol {
+            margin: 30px 0;
+            padding-left: 60px;
+        }
+
+        .fullscreen-slide .slide-content p {
+            margin-bottom: 30px;
+            font-size: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .fullscreen-slide .slide-content li {
+            margin-bottom: 20px;
+            font-size: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .slide-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(128, 128, 128, 0.9);
+            color: #333;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .fullscreen-footer {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(128, 128, 128, 0.9);
+            color: #333;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .fullscreen-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px 25px;
+            border-radius: 50px;
+        }
+
+        .examples {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .examples h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .example-item {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .example-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .example-item code {
+            font-family: 'Courier New', monospace;
+            color: #2d3748;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .quiz-option input[type="radio"] {
+            display: none;
+        }
+
+        .quiz-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .option-letter {
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            font-size: 2.5rem;
+            line-height: 1.4;
+        }
+
+        .quiz-option input[type="radio"]:checked + label {
+            background: #e6f3ff;
+        }
+
+        .quiz-option input[type="radio"]:checked + label .option-letter {
+            background: #2d5aa0;
+        }
+
+        .quiz-option.correct-selected {
+            border-color: #38a169;
+            background: #f0fff4;
+        }
+
+        .quiz-option.correct-selected .option-letter {
+            background: #38a169;
+        }
+
+        .quiz-option.incorrect-selected {
+            border-color: #e53e3e;
+            background: #fff5f5;
+        }
+
+        .quiz-option.incorrect-selected .option-letter {
+            background: #e53e3e;
+        }
+
+        .quiz-option.show-correct {
+            border-color: #38a169;
+            background: #f0fff4;
+        }
+
+        .quiz-option.show-correct .option-letter {
+            background: #38a169;
+        }
+
+        /* True/False Styles */
+        .tf-container {
+            background: #fff8e1;
+            border: 2px solid #ff9800;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .tf-question {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #e2e8f0;
+        }
+
+        .tf-statement {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .tf-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .tf-option {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tf-option:hover {
+            border-color: #ff9800;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.1);
+        }
+
+        .tf-option input[type="radio"] {
+            display: none;
+        }
+
+        .tf-label {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .tf-label.true {
+            color: #38a169;
+        }
+
+        .tf-label.false {
+            color: #e53e3e;
+        }
+
+        .tf-option input[type="radio"]:checked + .tf-label {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .tf-option.correct-tf-selected {
+            border-color: #38a169;
+            background: #f0fff4;
+        }
+
+        .tf-option.incorrect-tf-selected {
+            border-color: #e53e3e;
+            background: #fff5f5;
+        }
+
+        .tf-option.show-correct-tf {
+            border-color: #38a169;
+            background: #f0fff4;
+        }
+
+        /* Quiz Controls */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .quiz-check {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-result {
+            font-size: 1.8rem;
+            font-weight: 600;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .quiz-result.correct {
+            background: #f0fff4;
+            color: #38a169;
+            border: 2px solid #38a169;
+        }
+
+        .quiz-result.incorrect {
+            background: #fff5f5;
+            color: #e53e3e;
+            border: 2px solid #e53e3e;
+        }
+
+        .quiz-result.partial {
+            background: #fffbf0;
+            color: #d69e2e;
+            border: 2px solid #d69e2e;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                justify-content: center;
+            }
+            
+            .slide h3 {
+                font-size: 2.5rem;
+            }
+            
+            .slide-content {
+                font-size: 2.5rem;
+            }
+            
+            .slide-content p, .slide-content li {
+                font-size: 2.5rem;
+            }
+            
+            .fullscreen-slide h3 {
+                font-size: 3rem;
+            }
+            
+            .fullscreen-slide .slide-content {
+                font-size: 2.5rem;
+            }
+            
+            .fullscreen-slide .slide-content p, .fullscreen-slide .slide-content li {
+                font-size: 2.5rem;
+            }
+            
+            .option-text {
+                font-size: 2rem;
+            }
+            
+            .tf-statement {
+                font-size: 1.8rem;
+            }
+            
+            .tf-label {
+                font-size: 1.5rem;
+            }
+            
+            .tf-options {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Trình chiếu bài giảng</h1>
-    </header>
-    <main>
-        <section id="slideShowTab">
-            <div id="slideArea">
-                <!-- Nội dung slide sẽ hiện ở đây -->
+    <div class="container">
+        <div class="header">
+            <h1>📊 Trình Chiếu Toán Học</h1>
+            <p>Chuyển đổi LaTeX thành slide trình chiếu chuyên nghiệp</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2>📝 Nhập Nội Dung LaTeX</h2>
+                <textarea 
+                    class="latex-input" 
+                    id="latexInput" 
+                    placeholder="Nhập nội dung LaTeX của bạn tại đây...
+
+Ví dụ:
+# Slide 1: Phương trình bậc hai
+Phương trình bậc hai có dạng: $ax^2 + bx + c = 0$
+
+Nghiệm của phương trình:
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+---
+
+# Slide 2: Tích phân
+$$\int_0^1 x^2 dx = \frac{1}{3}$$"
+                ></textarea>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateSlides()">🚀 Tạo Slide</button>
+                    <button class="btn btn-secondary" onclick="clearInput()">🗑️ Xóa</button>
+                    <button class="btn btn-secondary" onclick="loadExample()">📚 Ví dụ</button>
+                </div>
             </div>
-            <div class="slide-controls">
-                <button onclick="prevSlide()" class="btn btn-sm">◀ Trước</button>
-                <button onclick="nextSlide()" class="btn btn-sm">Tiếp ▶</button>
-                <span id="slideIndex" style="margin-left:1.3rem;"></span>
+
+            <div class="preview-section">
+                <h2>👀 Xem Trước Slide</h2>
+                <div class="slide-container" id="slideContainer">
+                    <div class="slide active" id="welcomeSlide">
+                        <h3>Chào mừng! 👋</h3>
+                        <div class="slide-content">
+                            <p>Nhập nội dung LaTeX vào ô bên trái và nhấn "Tạo Slide" để bắt đầu.</p>
+                            <br>
+                            <p><strong>Hướng dẫn:</strong></p>
+                            <ul style="text-align: left; margin-top: 10px;">
+                                <li>Sử dụng <code># Tiêu đề</code> để tạo slide mới</li>
+                                <li>Sử dụng <code>$...$</code> cho công thức inline</li>
+                                <li>Sử dụng <code>$$...$$</code> cho công thức display</li>
+                                <li>Sử dụng <code>---</code> để ngăn cách slide</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-footer">
+                        Thầy Vũ Tiến Lực - Trường THPT Nguyễn Hữu Cảnh
+                    </div>
+                </div>
+                
+                <div class="slide-navigation">
+                    <div class="slide-counter" id="slideCounter">Slide 1 / 1</div>
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="previousSlide()">⬅️ Trước</button>
+                        <button class="btn btn-secondary" onclick="nextSlide()">Tiếp ➡️</button>
+                        <button class="btn btn-primary" onclick="enterFullscreen()">🖥️ Toàn màn hình</button>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
-    <script src="app.js"></script>
-</body>
+        </div>
+
+        <div class="examples">
+            <h3>📝 Hướng Dẫn Soạn Văn Bản LaTeX</h3>
+            <div style="background: #e8f4fd; border: 2px solid #3182ce; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                <h4 style="color: #2c5282; margin-bottom: 15px;">🔧 Cú Pháp Cơ Bản:</h4>
+                <div style="font-family: 'Courier New', monospace; background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                    <strong>Tạo slide mới:</strong><br>
+                    <code># Tiêu đề slide</code><br><br>
+                    
+                    <strong>Ngăn cách slide:</strong><br>
+                    <code>---</code><br><br>
+                    
+                    <strong>Công thức inline:</strong><br>
+                    <code>$x^2 + y^2 = z^2$</code><br><br>
+                    
+                    <strong>Công thức display:</strong><br>
+                    <code>$$\\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$$</code><br><br>
+                    
+                    <strong>Danh sách:</strong><br>
+                    <code>- Mục 1</code><br>
+                    <code>- Mục 2</code><br><br>
+                    
+                    <strong>Câu hỏi trắc nghiệm (A,B,C,D):</strong><br>
+                    <code>A) Đáp án 1</code><br>
+                    <code>B) Đáp án 2</code><br>
+                    <code>C) *Đáp án đúng</code><br>
+                    <code>D) Đáp án 4</code><br><br>
+                    
+                    <strong>Câu hỏi đúng/sai (a,b,c,d):</strong><br>
+                    <code>a) *Đ Mệnh đề đúng</code><br>
+                    <code>b) *S Mệnh đề sai</code>
+                </div>
+                
+                <h4 style="color: #2c5282; margin: 15px 0;">⚠️ Lưu Ý Quan Trọng:</h4>
+                <ul style="color: #2d3748; margin-left: 20px;">
+                    <li>Dùng <code>\\</code> thay vì <code>\</code> trong công thức (ví dụ: <code>\\frac</code>, <code>\\sqrt</code>)</li>
+                    <li>Không để dấu cách giữa <code>$</code> và công thức</li>
+                    <li>Mỗi slide nên có tiêu đề bắt đầu bằng <code>#</code></li>
+                    <li>Dùng <code>---</code> để tách slide rõ ràng</li>
+                    <li><strong>Câu hỏi trắc nghiệm:</strong> Đánh dấu đáp án đúng bằng <code>*</code> trước nội dung</li>
+                    <li><strong>Câu hỏi đúng/sai:</strong> Dùng <code>*Đ</code> cho đúng, <code>*S</code> cho sai</li>
+                </ul>
+            </div>
+            
+            <h3>📖 Ví dụ LaTeX</h3>
+            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Định lý Pythagoras
+Trong tam giác vuông, ta có công thức:
+$$a^2 + b^2 = c^2$$
+
+Ý nghĩa các thành phần:
+- $a$, $b$: độ dài hai cạnh góc vuông
+- $c$: độ dài cạnh huyền
+
+Ứng dụng:
+- Tính độ dài cạnh trong tam giác vuông
+- Kiểm tra tính vuông góc của tam giác
+- Giải các bài toán hình học phẳng">
+                <code># Định lý Pythagoras</code> - Công thức cơ bản với ý chính
+            </div>
+            
+            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Giới hạn cơ bản
+Giới hạn quan trọng trong giải tích:
+$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
+
+Ứng dụng:
+- Tính đạo hàm của hàm lượng giác
+- Giải các bài toán giới hạn phức tạp
+
+---
+
+# Công thức đạo hàm
+Đạo hàm của hàm lũy thừa:
+$$\frac{d}{dx}(x^n) = nx^{n-1}$$
+
+Các trường hợp đặc biệt:
+- $n = 1$: $\frac{d}{dx}(x) = 1$
+- $n = 2$: $\frac{d}{dx}(x^2) = 2x$
+- $n = 0$: $\frac{d}{dx}(1) = 0$
+
+---
+
+# Công thức tích phân
+Tích phân của hàm lũy thừa:
+$$\int x^n dx = \frac{x^{n+1}}{n+1} + C$$
+
+Lưu ý: Công thức này áp dụng khi $n \neq -1$">
+                <code># Giải tích</code> - Giới hạn, đạo hàm, tích phân với ý chính
+            </div>
+            
+            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Ma trận 2x2
+Ma trận vuông cấp 2 có dạng:
+$$A = \\begin{pmatrix}
+a_{11} & a_{12} \\\\
+a_{21} & a_{22}
+\\end{pmatrix}$$
+
+Định thức của ma trận:
+$$\\det(A) = a_{11}a_{22} - a_{12}a_{21}$$
+
+Ý nghĩa:
+- $\\det(A) \\neq 0$: ma trận khả nghịch
+- $\\det(A) = 0$: ma trận suy biến
+- Định thức dùng để tính ma trận nghịch đảo
+
+https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Matrix_multiplication_diagram_2.svg/313px-Matrix_multiplication_diagram_2.svg.png">
+                <code># Đại số tuyến tính</code> - Ma trận với hình ảnh minh họa
+            </div>
+            
+            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Câu hỏi trắc nghiệm: Phương trình bậc hai
+Cho phương trình $x^2 - 5x + 6 = 0$. Nghiệm của phương trình là:
+
+A) $x_1 = 1, x_2 = 6$
+B) $x_1 = 2, x_2 = 4$  
+C) *$x_1 = 2, x_2 = 3$
+D) $x_1 = 1, x_2 = 5$
+
+---
+
+# Câu hỏi đúng/sai: Tính chất hàm số
+Xét các mệnh đề sau về hàm số $f(x) = x^2 - 4x + 3$:
+
+a) *Đ Hàm số có đỉnh tại điểm $(2, -1)$
+b) *S Hàm số đồng biến trên khoảng $(-\\infty, 2)$  
+c) *Đ Hàm số có hai nghiệm $x = 1$ và $x = 3$
+d) *S Giá trị nhỏ nhất của hàm số là $3$">
+                <code># Câu hỏi trắc nghiệm</code> - Ví dụ câu hỏi A,B,C,D và đúng/sai
+            </div>
+            
+            <div style="background: #f0fff4; border: 2px solid #38a169; border-radius: 10px; padding: 20px; margin-top: 20px;">
+                <h4 style="color: #2f855a; margin-bottom: 15px;">📋 Mẫu Văn Bản Hoàn Chỉnh:</h4>
+                <div style="font-family: 'Courier New', monospace; background: white; padding: 15px; border-radius: 8px; font-size: 13px; line-height: 1.4; max-height: 300px; overflow-y: auto;">
+# Hàm số bậc hai<br>
+Hàm số bậc hai có dạng tổng quát:<br>
+$$f(x) = ax^2 + bx + c$$<br><br>
+
+Với các điều kiện:<br>
+- $a \\neq 0$ (hệ số bậc hai)<br>
+- $b, c \\in \\mathbb{R}$ (các hệ số thực)<br><br>
+
+Đồ thị của hàm số là một parabol.<br><br>
+
+---<br><br>
+
+# Tính chất của parabol<br>
+Parabol $y = ax^2 + bx + c$ có các tính chất:<br><br>
+
+**Đỉnh parabol:**<br>
+$$I\\left(-\\frac{b}{2a}, -\\frac{\\Delta}{4a}\\right)$$<br><br>
+
+**Trục đối xứng:**<br>
+$$x = -\\frac{b}{2a}$$<br><br>
+
+**Biệt thức:**<br>
+$$\\Delta = b^2 - 4ac$$<br><br>
+
+Các trường hợp:<br>
+- $a > 0$: parabol quay lên<br>
+- $a < 0$: parabol quay xuống<br><br>
+
+---<br><br>
+
+# Ví dụ cụ thể<br>
+Xét hàm số: $f(x) = 2x^2 - 4x + 1$<br><br>
+
+**Bước 1:** Xác định hệ số<br>
+- $a = 2 > 0$ → parabol quay lên<br>
+- $b = -4$<br>
+- $c = 1$<br><br>
+
+**Bước 2:** Tính đỉnh<br>
+$$x_I = -\\frac{(-4)}{2 \\cdot 2} = 1$$<br>
+$$y_I = f(1) = 2 - 4 + 1 = -1$$<br><br>
+
+Vậy đỉnh $I(1, -1)$<br><br>
+
+**Bước 3:** Vẽ đồ thị<br>
+- Đỉnh: $I(1, -1)$<br>
+- Trục đối xứng: $x = 1$<br>
+- Giao với trục tung: $(0, 1)$
+                </div>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="insertExample(`# Hàm số bậc hai
+Hàm số bậc hai có dạng tổng quát:
+$$f(x) = ax^2 + bx + c$$
+
+Với các điều kiện:
+- $a \\\\neq 0$ (hệ số bậc hai)
+- $b, c \\\\in \\\\mathbb{R}$ (các hệ số thực)
+
+Đồ thị của hàm số là một parabol.
+
+---
+
+# Tính chất của parabol
+Parabol $y = ax^2 + bx + c$ có các tính chất:
+
+**Đỉnh parabol:**
+$$I\\\\left(-\\\\frac{b}{2a}, -\\\\frac{\\\\Delta}{4a}\\\\right)$$
+
+**Trục đối xứng:**
+$$x = -\\\\frac{b}{2a}$$
+
+**Biệt thức:**
+$$\\\\Delta = b^2 - 4ac$$
+
+Các trường hợp:
+- $a > 0$: parabol quay lên
+- $a < 0$: parabol quay xuống
+
+---
+
+# Ví dụ cụ thể
+Xét hàm số: $f(x) = 2x^2 - 4x + 1$
+
+**Bước 1:** Xác định hệ số
+- $a = 2 > 0$ → parabol quay lên
+- $b = -4$
+- $c = 1$
+
+**Bước 2:** Tính đỉnh
+$$x_I = -\\\\frac{(-4)}{2 \\\\cdot 2} = 1$$
+$$y_I = f(1) = 2 - 4 + 1 = -1$$
+
+Vậy đỉnh $I(1, -1)$
+
+**Bước 3:** Vẽ đồ thị
+- Đỉnh: $I(1, -1)$
+- Trục đối xứng: $x = 1$
+- Giao với trục tung: $(0, 1)$`)">📋 Sử dụng mẫu này</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Presentation -->
+    <div class="fullscreen-section" id="fullscreenSection">
+        <div class="fullscreen-slide" id="fullscreenSlide">
+            <h3>Slide Title</h3>
+            <div class="slide-content">Slide content here</div>
+        </div>
+        
+        <div class="fullscreen-footer">
+            Thầy Vũ Tiến Lực - Trường THPT Nguyễn Hữu Cảnh
+        </div>
+        
+        <div class="fullscreen-controls">
+            <button class="btn btn-secondary" onclick="fullscreenPrevious()">⬅️</button>
+            <button class="btn btn-secondary" onclick="fullscreenNext()">➡️</button>
+            <button class="btn btn-secondary" onclick="exitFullscreen()">❌ Thoát</button>
+        </div>
+    </div>
+
+    <script>
+        let slides = [];
+        let currentSlide = 0;
+        let isFullscreen = false;
+
+        function parseLatexToSlides(latexText) {
+            // Split by --- or # headers
+            const sections = latexText.split(/(?=^#|\n---\n)/m).filter(section => section.trim());
+            
+            return sections.map(section => {
+                const lines = section.trim().split('\n');
+                let title = 'Slide';
+                let content = section;
+                
+                // Extract title if starts with #
+                if (lines[0].startsWith('#')) {
+                    title = lines[0].replace(/^#+\s*/, '');
+                    content = lines.slice(1).join('\n').trim();
+                }
+                
+                // Process content for better formatting
+                content = processContent(content);
+                
+                return { title, content };
+            });
+        }
+
+        function processContent(content) {
+            // Convert image URLs to img tags
+            content = content.replace(/https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp|svg)/gi, 
+                '<img src="$&" alt="Hình ảnh" onerror="this.style.display=\'none\'; this.nextSibling.textContent=\'[Không thể tải hình ảnh: $&]\'"><span></span>');
+            
+            // Process multiple choice questions
+            if (content.includes('A)') || content.includes('B)') || content.includes('C)') || content.includes('D)')) {
+                return processMultipleChoice(content);
+            }
+            
+            // Process true/false questions
+            if (content.includes('a)') || content.includes('b)') || content.includes('c)') || content.includes('d)')) {
+                return processTrueFalse(content);
+            }
+            
+            // Convert bullet points to proper list items
+            const lines = content.split('\n');
+            let processedLines = [];
+            let inList = false;
+            
+            for (let line of lines) {
+                line = line.trim();
+                
+                // Check if line starts with bullet point
+                if (line.match(/^[-*•]\s+/)) {
+                    if (!inList) {
+                        processedLines.push('<ul>');
+                        inList = true;
+                    }
+                    processedLines.push('<li>' + line.replace(/^[-*•]\s+/, '') + '</li>');
+                } else if (line.match(/^\d+\.\s+/)) {
+                    if (!inList) {
+                        processedLines.push('<ol>');
+                        inList = true;
+                    }
+                    processedLines.push('<li>' + line.replace(/^\d+\.\s+/, '') + '</li>');
+                } else {
+                    if (inList) {
+                        processedLines.push(inList === 'ul' ? '</ul>' : '</ol>');
+                        inList = false;
+                    }
+                    if (line) {
+                        processedLines.push('<p>' + line + '</p>');
+                    }
+                }
+            }
+            
+            if (inList) {
+                processedLines.push('</ul>');
+            }
+            
+            return processedLines.join('\n');
+        }
+
+        function processMultipleChoice(content) {
+            const lines = content.split('\n');
+            let processedLines = [];
+            let questionId = 'q' + Math.random().toString(36).substr(2, 9);
+            let correctAnswer = '';
+            
+            for (let line of lines) {
+                line = line.trim();
+                
+                if (line.match(/^[ABCD]\)/)) {
+                    const option = line.charAt(0);
+                    const text = line.substring(2).trim();
+                    
+                    // Check if this is the correct answer (marked with *)
+                    if (text.startsWith('*')) {
+                        correctAnswer = option;
+                        const cleanText = text.substring(1).trim();
+                        processedLines.push(`
+                            <div class="quiz-option correct-answer" data-answer="${option}">
+                                <input type="radio" name="${questionId}" value="${option}" id="${questionId}_${option}">
+                                <label for="${questionId}_${option}">
+                                    <span class="option-letter">${option}</span>
+                                    <span class="option-text">${cleanText}</span>
+                                </label>
+                            </div>
+                        `);
+                    } else {
+                        processedLines.push(`
+                            <div class="quiz-option" data-answer="${option}">
+                                <input type="radio" name="${questionId}" value="${option}" id="${questionId}_${option}">
+                                <label for="${questionId}_${option}">
+                                    <span class="option-letter">${option}</span>
+                                    <span class="option-text">${text}</span>
+                                </label>
+                            </div>
+                        `);
+                    }
+                } else if (line) {
+                    processedLines.push('<p>' + line + '</p>');
+                }
+            }
+            
+            // Add check answer button
+            processedLines.push(`
+                <div class="quiz-controls">
+                    <button class="btn btn-primary quiz-check" onclick="checkMultipleChoice('${questionId}', '${correctAnswer}')">
+                        ✓ Kiểm tra đáp án
+                    </button>
+                    <div class="quiz-result" id="result_${questionId}"></div>
+                </div>
+            `);
+            
+            return '<div class="quiz-container">' + processedLines.join('\n') + '</div>';
+        }
+
+        function processTrueFalse(content) {
+            const lines = content.split('\n');
+            let processedLines = [];
+            let questionId = 'tf' + Math.random().toString(36).substr(2, 9);
+            let answers = {};
+            
+            for (let line of lines) {
+                line = line.trim();
+                
+                if (line.match(/^[abcd]\)/)) {
+                    const option = line.charAt(0);
+                    const text = line.substring(2).trim();
+                    
+                    // Check if this is true (marked with *Đ) or false (marked with *S)
+                    let isCorrect = null;
+                    let cleanText = text;
+                    
+                    if (text.includes('*Đ') || text.includes('*đ')) {
+                        isCorrect = true;
+                        cleanText = text.replace(/\*[Đđ]/g, '').trim();
+                        answers[option] = true;
+                    } else if (text.includes('*S') || text.includes('*s')) {
+                        isCorrect = false;
+                        cleanText = text.replace(/\*[Ss]/g, '').trim();
+                        answers[option] = false;
+                    }
+                    
+                    processedLines.push(`
+                        <div class="tf-question" data-option="${option}">
+                            <div class="tf-statement">${option}) ${cleanText}</div>
+                            <div class="tf-options">
+                                <label class="tf-option ${isCorrect === true ? 'correct-tf' : ''}">
+                                    <input type="radio" name="${questionId}_${option}" value="true">
+                                    <span class="tf-label true">Đúng</span>
+                                </label>
+                                <label class="tf-option ${isCorrect === false ? 'correct-tf' : ''}">
+                                    <input type="radio" name="${questionId}_${option}" value="false">
+                                    <span class="tf-label false">Sai</span>
+                                </label>
+                            </div>
+                        </div>
+                    `);
+                } else if (line) {
+                    processedLines.push('<p>' + line + '</p>');
+                }
+            }
+            
+            // Add check answer button
+            processedLines.push(`
+                <div class="quiz-controls">
+                    <button class="btn btn-primary quiz-check" onclick="checkTrueFalse('${questionId}', ${JSON.stringify(answers).replace(/"/g, '&quot;')})">
+                        ✓ Kiểm tra đáp án
+                    </button>
+                    <div class="quiz-result" id="result_${questionId}"></div>
+                </div>
+            `);
+            
+            return '<div class="tf-container">' + processedLines.join('\n') + '</div>';
+        }
+
+        function generateSlides() {
+            const latexInput = document.getElementById('latexInput').value.trim();
+            
+            if (!latexInput) {
+                alert('Vui lòng nhập nội dung LaTeX!');
+                return;
+            }
+
+            slides = parseLatexToSlides(latexInput);
+            currentSlide = 0;
+            
+            renderSlides();
+            updateSlideDisplay();
+        }
+
+        function renderSlides() {
+            const container = document.getElementById('slideContainer');
+            container.innerHTML = '';
+            
+            slides.forEach((slide, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = `slide ${index === 0 ? 'active' : ''}`;
+                slideDiv.innerHTML = `
+                    <h3>${addIconToTitle(slide.title)}</h3>
+                    <div class="slide-content">${slide.content}</div>
+                `;
+                container.appendChild(slideDiv);
+            });
+            
+            // Add footer
+            const footer = document.createElement('div');
+            footer.className = 'slide-footer';
+            footer.textContent = 'Thầy Vũ Tiến Lực - Trường THPT Nguyễn Hữu Cảnh';
+            container.appendChild(footer);
+            
+            // Re-render MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise([container]).catch(err => console.log(err));
+            }
+            
+            // Add staggered animation delays
+            addAnimationDelays();
+        }
+
+        function addIconToTitle(title) {
+            const icons = {
+                'phương trình': '📐',
+                'định lý': '🔺',
+                'công thức': '📊',
+                'giới hạn': '∞',
+                'đạo hàm': '📈',
+                'tích phân': '∫',
+                'ma trận': '🔢',
+                'hình học': '📐',
+                'đại số': '🔢',
+                'giải tích': '📈',
+                'toán học': '🧮',
+                'ví dụ': '💡',
+                'bài tập': '📝',
+                'lý thuyết': '📚',
+                'ứng dụng': '⚙️'
+            };
+            
+            let iconTitle = title;
+            for (let keyword in icons) {
+                if (title.toLowerCase().includes(keyword)) {
+                    iconTitle = icons[keyword] + ' ' + title;
+                    break;
+                }
+            }
+            
+            // Default icon if no match
+            if (iconTitle === title) {
+                iconTitle = '📌 ' + title;
+            }
+            
+            return iconTitle;
+        }
+
+        function addAnimationDelays() {
+            const activeSlide = document.querySelector('.slide.active');
+            if (activeSlide) {
+                const elements = activeSlide.querySelectorAll('.slide-content p, .slide-content li');
+                elements.forEach((element, index) => {
+                    element.style.animationDelay = `${index * 0.2}s`;
+                });
+            }
+        }
+
+        function updateSlideDisplay() {
+            const slideElements = document.querySelectorAll('.slide');
+            slideElements.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            
+            document.getElementById('slideCounter').textContent = 
+                `Slide ${currentSlide + 1} / ${slides.length}`;
+            
+            // Add animation delays for new active slide
+            setTimeout(() => {
+                addAnimationDelays();
+            }, 100);
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlideDisplay();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideDisplay();
+            }
+        }
+
+        function enterFullscreen() {
+            if (slides.length === 0) {
+                alert('Vui lòng tạo slide trước!');
+                return;
+            }
+            
+            isFullscreen = true;
+            document.getElementById('fullscreenSection').style.display = 'block';
+            updateFullscreenSlide();
+            
+            // Hide scrollbars
+            document.body.style.overflow = 'hidden';
+        }
+
+        function exitFullscreen() {
+            isFullscreen = false;
+            document.getElementById('fullscreenSection').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateFullscreenSlide() {
+            if (slides.length === 0) return;
+            
+            const slide = slides[currentSlide];
+            const fullscreenSlide = document.getElementById('fullscreenSlide');
+            fullscreenSlide.innerHTML = `
+                <h3>${addIconToTitle(slide.title)}</h3>
+                <div class="slide-content">${slide.content}</div>
+            `;
+            
+            // Re-render MathJax for fullscreen
+            if (window.MathJax) {
+                MathJax.typesetPromise([fullscreenSlide]).catch(err => console.log(err));
+            }
+            
+            // Add animation delays for fullscreen
+            setTimeout(() => {
+                const elements = fullscreenSlide.querySelectorAll('.slide-content p, .slide-content li');
+                elements.forEach((element, index) => {
+                    element.style.animationDelay = `${index * 0.2}s`;
+                });
+            }, 100);
+        }
+
+        function fullscreenNext() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateFullscreenSlide();
+                updateSlideDisplay(); // Update preview too
+            }
+        }
+
+        function fullscreenPrevious() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateFullscreenSlide();
+                updateSlideDisplay(); // Update preview too
+            }
+        }
+
+        function clearInput() {
+            document.getElementById('latexInput').value = '';
+        }
+
+        function loadExample() {
+            const exampleLatex = `# Phương trình bậc hai
+Phương trình bậc hai có dạng tổng quát:
+$$ax^2 + bx + c = 0$$
+
+Với điều kiện: $a \\neq 0$
+
+Các thành phần của phương trình:
+- $a$: hệ số của $x^2$ (khác 0)
+- $b$: hệ số của $x$
+- $c$: hằng số tự do
+
+---
+
+# Công thức nghiệm
+Nghiệm của phương trình bậc hai được tính theo công thức:
+$$x_{1,2} = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$$
+
+Trong đó biệt thức: $\\Delta = b^2 - 4ac$
+
+Các trường hợp:
+- $\\Delta > 0$: phương trình có 2 nghiệm phân biệt
+- $\\Delta = 0$: phương trình có nghiệm kép
+- $\\Delta < 0$: phương trình vô nghiệm (trong tập số thực)
+
+---
+
+# Ví dụ minh họa
+Giải phương trình: $x^2 - 5x + 6 = 0$
+
+Bước 1: Xác định các hệ số
+- $a = 1$
+- $b = -5$ 
+- $c = 6$
+
+Bước 2: Tính biệt thức
+$\\Delta = (-5)^2 - 4 \\cdot 1 \\cdot 6 = 25 - 24 = 1 > 0$
+
+Bước 3: Tính nghiệm
+$x_1 = \\frac{5 + 1}{2} = 3$
+
+$x_2 = \\frac{5 - 1}{2} = 2$
+
+Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
+            
+            document.getElementById('latexInput').value = exampleLatex;
+        }
+
+        function insertExample(latexText) {
+            document.getElementById('latexInput').value = latexText;
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (isFullscreen) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    fullscreenNext();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    fullscreenPrevious();
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    exitFullscreen();
+                }
+            }
+        });
+
+        // Quiz Functions
+        function checkMultipleChoice(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const resultDiv = document.getElementById(`result_${questionId}`);
+            const allOptions = document.querySelectorAll(`input[name="${questionId}"]`);
+            
+            if (!selectedOption) {
+                resultDiv.innerHTML = '<div class="quiz-result incorrect">⚠️ Vui lòng chọn một đáp án!</div>';
+                return;
+            }
+            
+            const selectedValue = selectedOption.value;
+            const isCorrect = selectedValue === correctAnswer;
+            
+            // Reset all option styles
+            allOptions.forEach(option => {
+                const optionDiv = option.closest('.quiz-option');
+                optionDiv.classList.remove('correct-selected', 'incorrect-selected', 'show-correct');
+            });
+            
+            // Style the selected option
+            const selectedDiv = selectedOption.closest('.quiz-option');
+            if (isCorrect) {
+                selectedDiv.classList.add('correct-selected');
+                resultDiv.innerHTML = '<div class="quiz-result correct">✅ Chính xác! Bạn đã chọn đúng đáp án.</div>';
+            } else {
+                selectedDiv.classList.add('incorrect-selected');
+                // Show the correct answer
+                const correctDiv = document.querySelector(`input[name="${questionId}"][value="${correctAnswer}"]`).closest('.quiz-option');
+                correctDiv.classList.add('show-correct');
+                resultDiv.innerHTML = `<div class="quiz-result incorrect">❌ Sai rồi! Đáp án đúng là ${correctAnswer}.</div>`;
+            }
+            
+            // Disable the button after checking
+            const button = document.querySelector(`button[onclick*="${questionId}"]`);
+            button.disabled = true;
+            button.textContent = '✓ Đã kiểm tra';
+            button.style.opacity = '0.6';
+        }
+
+        function checkTrueFalse(questionId, correctAnswers) {
+            const questions = document.querySelectorAll(`[data-option]`);
+            const resultDiv = document.getElementById(`result_${questionId}`);
+            let totalQuestions = 0;
+            let correctCount = 0;
+            let allAnswered = true;
+            
+            // Parse correct answers if it's a string
+            if (typeof correctAnswers === 'string') {
+                correctAnswers = JSON.parse(correctAnswers.replace(/&quot;/g, '"'));
+            }
+            
+            questions.forEach(questionDiv => {
+                const option = questionDiv.dataset.option;
+                if (!option || !correctAnswers.hasOwnProperty(option)) return;
+                
+                totalQuestions++;
+                const selectedInput = document.querySelector(`input[name="${questionId}_${option}"]:checked`);
+                
+                if (!selectedInput) {
+                    allAnswered = false;
+                    return;
+                }
+                
+                const selectedValue = selectedInput.value === 'true';
+                const correctValue = correctAnswers[option];
+                const isCorrect = selectedValue === correctValue;
+                
+                // Reset styles
+                const tfOptions = questionDiv.querySelectorAll('.tf-option');
+                tfOptions.forEach(opt => {
+                    opt.classList.remove('correct-tf-selected', 'incorrect-tf-selected', 'show-correct-tf');
+                });
+                
+                // Style the selected option
+                const selectedLabel = selectedInput.closest('.tf-option');
+                if (isCorrect) {
+                    selectedLabel.classList.add('correct-tf-selected');
+                    correctCount++;
+                } else {
+                    selectedLabel.classList.add('incorrect-tf-selected');
+                    // Show correct answer
+                    const correctInput = document.querySelector(`input[name="${questionId}_${option}"][value="${correctValue}"]`);
+                    if (correctInput) {
+                        correctInput.closest('.tf-option').classList.add('show-correct-tf');
+                    }
+                }
+            });
+            
+            if (!allAnswered) {
+                resultDiv.innerHTML = '<div class="quiz-result incorrect">⚠️ Vui lòng trả lời tất cả các câu hỏi!</div>';
+                return;
+            }
+            
+            // Show results
+            if (correctCount === totalQuestions) {
+                resultDiv.innerHTML = `<div class="quiz-result correct">🎉 Xuất sắc! Bạn trả lời đúng ${correctCount}/${totalQuestions} câu!</div>`;
+            } else if (correctCount > totalQuestions / 2) {
+                resultDiv.innerHTML = `<div class="quiz-result partial">👍 Khá tốt! Bạn trả lời đúng ${correctCount}/${totalQuestions} câu.</div>`;
+            } else {
+                resultDiv.innerHTML = `<div class="quiz-result incorrect">📚 Cần ôn tập thêm! Bạn trả lời đúng ${correctCount}/${totalQuestions} câu.</div>`;
+            }
+            
+            // Disable the button after checking
+            const button = document.querySelector(`button[onclick*="${questionId}"]`);
+            button.disabled = true;
+            button.textContent = '✓ Đã kiểm tra';
+            button.style.opacity = '0.6';
+        }
+
+        // Initialize with welcome slide
+        slides = [{ title: 'Chào mừng! 👋', content: 'Nhập nội dung LaTeX để bắt đầu.' }];
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab918dd0655f59',t:'MTc1NDQ1MjIxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
