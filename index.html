@@ -16,8 +16,154 @@
                 fontCache: 'global'
             }
         };
+
+        // Define LaTeX examples in a JavaScript object
+        const latexExamples = {
+            'default': `# Slide 1: Phương trình bậc hai
+Phương trình bậc hai có dạng: $ax^2 + bx + c = 0$
+
+Nghiệm của phương trình:
+$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
+
+---
+
+# Slide 2: Tích phân có lời giải
+Tính tích phân: $\\int x^2 dx$
+[SOLUTION_START]
+**Lời giải:**
+Ta có công thức tích phân cơ bản:
+$$\\int x^n dx = \\frac{x^{n+1}}{n+1} + C$$Áp dụng cho $n=2$:$$\\int x^2 dx = \\frac{x^{2+1}}{2+1} + C = \\frac{x^3}{3} + C$$
+[SOLUTION_END]`,
+            'pythagoras': `# Định lý Pythagoras
+Trong tam giác vuông, ta có công thức:
+$$a^2 + b^2 = c^2$$
+
+Ý nghĩa các thành phần:
+- $a$, $b$: độ dài hai cạnh góc vuông
+- $c$: độ dài cạnh huyền
+
+Ứng dụng:
+- Tính độ dài cạnh trong tam giác vuông
+- Kiểm tra tính vuông góc của tam giác
+- Giải các bài toán hình học phẳng`,
+            'calculus': `# Giới hạn cơ bản
+Giới hạn quan trọng trong giải tích:
+$$\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$
+
+Ứng dụng:
+- Tính đạo hàm của hàm lượng giác
+- Giải các bài toán giới hạn phức tạp
+
+---
+
+# Công thức đạo hàm
+Đạo hàm của hàm lũy thừa:
+$$\\frac{d}{dx}(x^n) = nx^{n-1}$$
+
+Các trường hợp đặc biệt:
+- $n = 1$: $\\frac{d}{dx}(x) = 1$
+- $n = 2$: $\\frac{d}{dx}(x^2) = 2x$
+- $n = 0$: $\\frac{d}{dx}(1) = 0$
+
+---
+
+# Công thức tích phân
+Tích phân của hàm lũy thừa:
+$$\\int x^n dx = \\frac{x^{n+1}}{n+1} + C$$
+
+Lưu ý: Công thức này áp dụng khi $n \\neq -1`,
+            'linear_algebra': `# Ma trận 2x2
+Ma trận vuông cấp 2 có dạng:
+$$A = \\begin{pmatrix}
+a_{11} & a_{12} \\\\
+a_{21} & a_{22}
+\\end{pmatrix}$$
+
+Định thức của ma trận:
+$$\\det(A) = a_{11}a_{22} - a_{12}a_{21}$$
+
+Ý nghĩa:
+- $\\det(A) \\neq 0$: ma trận khả nghịch
+- $\\det(A) = 0$: ma trận suy biến
+- Định thức dùng để tính ma trận nghịch đảo
+
+https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Matrix_multiplication_diagram_2.svg/313px-Matrix_multiplication_diagram_2.svg.png`,
+            'quiz_example': `# Câu hỏi trắc nghiệm: Phương trình bậc hai
+Cho phương trình $x^2 - 5x + 6 = 0$. Nghiệm của phương trình là:
+
+A) $x_1 = 1, x_2 = 6$
+B) $x_1 = 2, x_2 = 4$  
+C) *$x_1 = 2, x_2 = 3$
+D) $x_1 = 1, x_2 = 5$
+
+---
+
+# Câu hỏi đúng/sai: Tính chất hàm số
+Xét các mệnh đề sau về hàm số $f(x) = x^2 - 4x + 3$:
+
+a) *Đ Hàm số có đỉnh tại điểm $(2, -1)$
+b) *S Hàm số đồng biến trên khoảng $(-\\infty, 2)$  
+c) *Đ Hàm số có hai nghiệm $x = 1$ và $x = 3$
+d) *S Giá trị nhỏ nhất của hàm số là $3$`,
+            'full_example': `# Hàm số bậc hai
+Hàm số bậc hai có dạng tổng quát:
+$$f(x) = ax^2 + bx + c$$
+
+Với các điều kiện:
+- $a \\neq 0$ (hệ số bậc hai)
+- $b, c \\in \\mathbb{R}$ (các hệ số thực)
+
+Đồ thị của hàm số là một parabol.
+
+---
+
+# Tính chất của parabol
+Parabol $y = ax^2 + bx + c$ có các tính chất:
+
+**Đỉnh parabol:**
+$$I\\left(-\\frac{b}{2a}, -\\frac{\\Delta}{4a}\\right)$$
+
+**Trục đối xứng:**
+$$x = -\\frac{b}{2a}$$
+
+**Biệt thức:**
+$$\\Delta = b^2 - 4ac$$
+
+Các trường hợp:
+- $a > 0$: parabol quay lên
+- $a < 0$: parabol quay xuống
+
+---
+
+# Ví dụ cụ thể
+Xét hàm số: $f(x) = 2x^2 - 4x + 1$
+
+**Bước 1:** Xác định hệ số
+- $a = 2 > 0$ → parabol quay lên
+- $b = -4$
+- $c = 1$
+
+**Bước 2:** Tính đỉnh
+$$x_I = -\\frac{(-4)}{2 \\cdot 2} = 1$$
+$$y_I = f(1) = 2 - 4 + 1 = -1$$
+
+Vậy đỉnh $I(1, -1)$
+
+**Bước 3:** Vẽ đồ thị
+- Đỉnh: $I(1, -1)$
+- Trục đối xứng: $x = 1$
+- Giao với trục tung: $(0, 1)
+
+[SOLUTION_START]
+**Lời giải chi tiết:**
+Đây là phần lời giải cho ví dụ trên.
+Bạn có thể đặt các bước giải, công thức toán học, hoặc bất kỳ giải thích nào tại đây.
+$$\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}$$
+[SOLUTION_END]`
+        };
     </script>
     <style>
+        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -257,7 +403,7 @@
             height: 100vh;
             background: #1a202c;
             color: white;
-            display: none;
+            display: none; /* Controlled by JS based on fullscreen state */
             z-index: 1000;
         }
 
@@ -384,6 +530,7 @@
 
         .example-item:hover {
             background: #edf2f7;
+            border-color: #cbd5e0;
             transform: translateX(5px);
         }
 
@@ -402,8 +549,8 @@
         }
 
         .quiz-option {
-            background: white;
-            border: 2px solid #e2e8f0;
+            background: #ffffff; /* White background */
+            border: 2px solid #e2e8f0; /* Light gray border */
             border-radius: 10px;
             margin: 15px 0;
             padding: 20px;
@@ -412,7 +559,8 @@
         }
 
         .quiz-option:hover {
-            border-color: #667eea;
+            border-color: #93a3ed; /* Lighter purple on hover */
+            background: #f0f4f8; /* Very light gray background on hover */
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
         }
 
@@ -428,7 +576,7 @@
         }
 
         .option-letter {
-            background: #667eea;
+            background: #667eea; /* Purple */
             color: white;
             width: 50px;
             height: 50px;
@@ -445,41 +593,55 @@
         .option-text {
             font-size: 2.5rem;
             line-height: 1.4;
+            color: #333; /* Dark text for contrast */
         }
 
         .quiz-option input[type="radio"]:checked + label {
-            background: #e6f3ff;
+            background: #e0f2fe; /* Light blue when checked */
+            border-color: #3b82f6; /* Blue border when checked */
         }
 
         .quiz-option input[type="radio"]:checked + label .option-letter {
-            background: #2d5aa0;
+            background: #1d4ed8; /* Darker blue when checked */
         }
 
         .quiz-option.correct-selected {
-            border-color: #38a169;
-            background: #f0fff4;
+            border-color: #22c55e; /* Green border */
+            background: #dcfce7; /* Light green background */
         }
 
         .quiz-option.correct-selected .option-letter {
-            background: #38a169;
+            background: #15803d; /* Dark green */
+            color: white; /* Ensure text is white for contrast */
+        }
+        .quiz-option.correct-selected .option-text {
+            color: #15803d; /* Dark green text */
         }
 
         .quiz-option.incorrect-selected {
-            border-color: #e53e3e;
-            background: #fff5f5;
+            border-color: #ef4444; /* Red border */
+            background: #fee2e2; /* Light red background */
         }
 
         .quiz-option.incorrect-selected .option-letter {
-            background: #e53e3e;
+            background: #b91c1c; /* Dark red */
+            color: white; /* Ensure text is white for contrast */
+        }
+        .quiz-option.incorrect-selected .option-text {
+            color: #b91c1c; /* Dark red text */
         }
 
         .quiz-option.show-correct {
-            border-color: #38a169;
-            background: #f0fff4;
+            border-color: #22c55e; /* Green border */
+            background: #dcfce7; /* Light green background */
         }
 
         .quiz-option.show-correct .option-letter {
-            background: #38a169;
+            background: #15803d; /* Dark green */
+            color: white; /* Ensure text is white for contrast */
+        }
+        .quiz-option.show-correct .option-text {
+            color: #15803d; /* Dark green text */
         }
 
         /* True/False Styles */
@@ -608,6 +770,107 @@
             border: 2px solid #d69e2e;
         }
 
+        /* Message Box Styles */
+        .message-box {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 2000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .message-box-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            color: #333;
+        }
+
+        .message-box-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .message-box-content .btn {
+            padding: 10px 25px;
+            font-size: 1rem;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Solution Section Styles */
+        .solution-toggle-wrapper {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .toggle-solution-btn {
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #4CAF50, #2E8B57); /* Green button */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .toggle-solution-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .solution-box {
+            background: #e8f5e9; /* Light green background */
+            border: 1px solid #a5d6a7; /* Green border */
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 2.5rem; /* Match slide content font size */
+            line-height: 1.6;
+        }
+
+        .solution-content-hidden {
+            display: none;
+        }
+
+        .solution-content-visible {
+            display: block;
+        }
+
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
@@ -677,25 +940,14 @@
                 <textarea 
                     class="latex-input" 
                     id="latexInput" 
-                    placeholder="Nhập nội dung LaTeX của bạn tại đây...
-
-Ví dụ:
-# Slide 1: Phương trình bậc hai
-Phương trình bậc hai có dạng: $ax^2 + bx + c = 0$
-
-Nghiệm của phương trình:
-$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
-
----
-
-# Slide 2: Tích phân
-$$\int_0^1 x^2 dx = \frac{1}{3}$$"
+                    placeholder="Nhập nội dung LaTeX của bạn tại đây..."
                 ></textarea>
                 
                 <div class="controls">
                     <button class="btn btn-primary" onclick="generateSlides()">🚀 Tạo Slide</button>
                     <button class="btn btn-secondary" onclick="clearInput()">🗑️ Xóa</button>
-                    <button class="btn btn-secondary" onclick="loadExample()">📚 Ví dụ</button>
+                    <button class="btn btn-secondary" onclick="loadExample('default')">📚 Ví dụ</button>
+                    <button class="btn btn-secondary" onclick="fixLatexBackslashes()">🔧 Sửa lỗi \\</button>
                 </div>
             </div>
 
@@ -713,6 +965,8 @@ $$\int_0^1 x^2 dx = \frac{1}{3}$$"
                                 <li>Sử dụng <code>$...$</code> cho công thức inline</li>
                                 <li>Sử dụng <code>$$...$$</code> cho công thức display</li>
                                 <li>Sử dụng <code>---</code> để ngăn cách slide</li>
+                                <li>**Quan trọng:** Dùng <code>\\</code> (hai dấu gạch chéo ngược) thay vì <code>\</code> (một dấu gạch chéo ngược) trong các lệnh LaTeX như <code>\\frac</code>, <code>\\sqrt</code>.</li>
+                                <li>**Lời giải:** Bao quanh nội dung lời giải bằng <code>[SOLUTION_START]</code> và <code>[SOLUTION_END]</code>.</li>
                             </ul>
                         </div>
                     </div>
@@ -761,101 +1015,40 @@ $$\int_0^1 x^2 dx = \frac{1}{3}$$"
                     
                     <strong>Câu hỏi đúng/sai (a,b,c,d):</strong><br>
                     <code>a) *Đ Mệnh đề đúng</code><br>
-                    <code>b) *S Mệnh đề sai</code>
+                    <code>b) *S Mệnh đề sai</code><br><br>
+
+                    <strong>Lời giải:</strong><br>
+                    <code>[SOLUTION_START]</code><br>
+                    <code>Nội dung lời giải</code><br>
+                    <code>[SOLUTION_END]</code>
                 </div>
                 
                 <h4 style="color: #2c5282; margin: 15px 0;">⚠️ Lưu Ý Quan Trọng:</h4>
                 <ul style="color: #2d3748; margin-left: 20px;">
-                    <li>Dùng <code>\\</code> thay vì <code>\</code> trong công thức (ví dụ: <code>\\frac</code>, <code>\\sqrt</code>)</li>
+                    <li>**RẤT QUAN TRỌNG:** Dùng <code>\\</code> thay vì <code>\</code> trong công thức (ví dụ: <code>\\frac</code>, <code>\\sqrt</code>)</li>
                     <li>Không để dấu cách giữa <code>$</code> và công thức</li>
                     <li>Mỗi slide nên có tiêu đề bắt đầu bằng <code>#</code></li>
                     <li>Dùng <code>---</code> để tách slide rõ ràng</li>
-                    <li><strong>Câu hỏi trắc nghiệm:</strong> Đánh dấu đáp án đúng bằng <code>*</code> trước nội dung</li>
-                    <li><strong>Câu hỏi đúng/sai:</strong> Dùng <code>*Đ</code> cho đúng, <code>*S</code> cho sai</li>
+                    <li>**Câu hỏi trắc nghiệm:** Đánh dấu đáp án đúng bằng <code>*</code> trước nội dung</li>
+                    <li>**Câu hỏi đúng/sai:** Dùng <code>*Đ</code> cho đúng, <code>*S</code> cho sai</li>
+                    <li>**Lời giải:** Nội dung bên trong <code>[SOLUTION_START]</code> và <code>[SOLUTION_END]</code> cũng hỗ trợ LaTeX và định dạng văn bản cơ bản.</li>
                 </ul>
             </div>
             
             <h3>📖 Ví dụ LaTeX</h3>
-            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Định lý Pythagoras
-Trong tam giác vuông, ta có công thức:
-$$a^2 + b^2 = c^2$$
-
-Ý nghĩa các thành phần:
-- $a$, $b$: độ dài hai cạnh góc vuông
-- $c$: độ dài cạnh huyền
-
-Ứng dụng:
-- Tính độ dài cạnh trong tam giác vuông
-- Kiểm tra tính vuông góc của tam giác
-- Giải các bài toán hình học phẳng">
+            <div class="example-item" onclick="insertExample('pythagoras')">
                 <code># Định lý Pythagoras</code> - Công thức cơ bản với ý chính
             </div>
             
-            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Giới hạn cơ bản
-Giới hạn quan trọng trong giải tích:
-$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
-
-Ứng dụng:
-- Tính đạo hàm của hàm lượng giác
-- Giải các bài toán giới hạn phức tạp
-
----
-
-# Công thức đạo hàm
-Đạo hàm của hàm lũy thừa:
-$$\frac{d}{dx}(x^n) = nx^{n-1}$$
-
-Các trường hợp đặc biệt:
-- $n = 1$: $\frac{d}{dx}(x) = 1$
-- $n = 2$: $\frac{d}{dx}(x^2) = 2x$
-- $n = 0$: $\frac{d}{dx}(1) = 0$
-
----
-
-# Công thức tích phân
-Tích phân của hàm lũy thừa:
-$$\int x^n dx = \frac{x^{n+1}}{n+1} + C$$
-
-Lưu ý: Công thức này áp dụng khi $n \neq -1$">
+            <div class="example-item" onclick="insertExample('calculus')">
                 <code># Giải tích</code> - Giới hạn, đạo hàm, tích phân với ý chính
             </div>
             
-            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Ma trận 2x2
-Ma trận vuông cấp 2 có dạng:
-$$A = \\begin{pmatrix}
-a_{11} & a_{12} \\\\
-a_{21} & a_{22}
-\\end{pmatrix}$$
-
-Định thức của ma trận:
-$$\\det(A) = a_{11}a_{22} - a_{12}a_{21}$$
-
-Ý nghĩa:
-- $\\det(A) \\neq 0$: ma trận khả nghịch
-- $\\det(A) = 0$: ma trận suy biến
-- Định thức dùng để tính ma trận nghịch đảo
-
-https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Matrix_multiplication_diagram_2.svg/313px-Matrix_multiplication_diagram_2.svg.png">
+            <div class="example-item" onclick="insertExample('linear_algebra')">
                 <code># Đại số tuyến tính</code> - Ma trận với hình ảnh minh họa
             </div>
             
-            <div class="example-item" onclick="insertExample(this.dataset.latex)" data-latex="# Câu hỏi trắc nghiệm: Phương trình bậc hai
-Cho phương trình $x^2 - 5x + 6 = 0$. Nghiệm của phương trình là:
-
-A) $x_1 = 1, x_2 = 6$
-B) $x_1 = 2, x_2 = 4$  
-C) *$x_1 = 2, x_2 = 3$
-D) $x_1 = 1, x_2 = 5$
-
----
-
-# Câu hỏi đúng/sai: Tính chất hàm số
-Xét các mệnh đề sau về hàm số $f(x) = x^2 - 4x + 3$:
-
-a) *Đ Hàm số có đỉnh tại điểm $(2, -1)$
-b) *S Hàm số đồng biến trên khoảng $(-\\infty, 2)$  
-c) *Đ Hàm số có hai nghiệm $x = 1$ và $x = 3$
-d) *S Giá trị nhỏ nhất của hàm số là $3$">
+            <div class="example-item" onclick="insertExample('quiz_example')">
                 <code># Câu hỏi trắc nghiệm</code> - Ví dụ câu hỏi A,B,C,D và đúng/sai
             </div>
             
@@ -867,8 +1060,8 @@ Hàm số bậc hai có dạng tổng quát:<br>
 $$f(x) = ax^2 + bx + c$$<br><br>
 
 Với các điều kiện:<br>
-- $a \\neq 0$ (hệ số bậc hai)<br>
-- $b, c \\in \\mathbb{R}$ (các hệ số thực)<br><br>
+- $a \\\\neq 0$ (hệ số bậc hai)<br>
+- $b, c \\\\in \\\\mathbb{R}$ (các hệ số thực)<br><br>
 
 Đồ thị của hàm số là một parabol.<br><br>
 
@@ -878,13 +1071,13 @@ Với các điều kiện:<br>
 Parabol $y = ax^2 + bx + c$ có các tính chất:<br><br>
 
 **Đỉnh parabol:**<br>
-$$I\\left(-\\frac{b}{2a}, -\\frac{\\Delta}{4a}\\right)$$<br><br>
+$$I\\\\left(-\\\\frac{b}{2a}, -\\\\frac{\\\\Delta}{4a}\\\\right)$$<br><br>
 
 **Trục đối xứng:**<br>
-$$x = -\\frac{b}{2a}$$<br><br>
+$$x = -\\\\frac{b}{2a}$$<br><br>
 
 **Biệt thức:**<br>
-$$\\Delta = b^2 - 4ac$$<br><br>
+$$\\\\Delta = b^2 - 4ac$$<br><br>
 
 Các trường hợp:<br>
 - $a > 0$: parabol quay lên<br>
@@ -901,7 +1094,7 @@ Xét hàm số: $f(x) = 2x^2 - 4x + 1$<br><br>
 - $c = 1$<br><br>
 
 **Bước 2:** Tính đỉnh<br>
-$$x_I = -\\frac{(-4)}{2 \\cdot 2} = 1$$<br>
+$$x_I = -\\\\frac{(-4)}{2 \\\\cdot 2} = 1$$<br>
 $$y_I = f(1) = 2 - 4 + 1 = -1$$<br><br>
 
 Vậy đỉnh $I(1, -1)$<br><br>
@@ -909,56 +1102,16 @@ Vậy đỉnh $I(1, -1)$<br><br>
 **Bước 3:** Vẽ đồ thị<br>
 - Đỉnh: $I(1, -1)$<br>
 - Trục đối xứng: $x = 1$<br>
-- Giao với trục tung: $(0, 1)$
+- Giao với trục tung: $(0, 1)$<br><br>
+
+[SOLUTION_START]<br>
+**Lời giải chi tiết:**<br>
+Đây là phần lời giải cho ví dụ trên.<br>
+Bạn có thể đặt các bước giải, công thức toán học, hoặc bất kỳ giải thích nào tại đây.<br>
+$$\\\\sum_{n=1}^{\\\\infty} \\\\frac{1}{n^2} = \\\\frac{\\\\pi^2}{6}$$<br>
+[SOLUTION_END]
                 </div>
-                <button class="btn btn-primary" style="margin-top: 10px;" onclick="insertExample(`# Hàm số bậc hai
-Hàm số bậc hai có dạng tổng quát:
-$$f(x) = ax^2 + bx + c$$
-
-Với các điều kiện:
-- $a \\\\neq 0$ (hệ số bậc hai)
-- $b, c \\\\in \\\\mathbb{R}$ (các hệ số thực)
-
-Đồ thị của hàm số là một parabol.
-
----
-
-# Tính chất của parabol
-Parabol $y = ax^2 + bx + c$ có các tính chất:
-
-**Đỉnh parabol:**
-$$I\\\\left(-\\\\frac{b}{2a}, -\\\\frac{\\\\Delta}{4a}\\\\right)$$
-
-**Trục đối xứng:**
-$$x = -\\\\frac{b}{2a}$$
-
-**Biệt thức:**
-$$\\\\Delta = b^2 - 4ac$$
-
-Các trường hợp:
-- $a > 0$: parabol quay lên
-- $a < 0$: parabol quay xuống
-
----
-
-# Ví dụ cụ thể
-Xét hàm số: $f(x) = 2x^2 - 4x + 1$
-
-**Bước 1:** Xác định hệ số
-- $a = 2 > 0$ → parabol quay lên
-- $b = -4$
-- $c = 1$
-
-**Bước 2:** Tính đỉnh
-$$x_I = -\\\\frac{(-4)}{2 \\\\cdot 2} = 1$$
-$$y_I = f(1) = 2 - 4 + 1 = -1$$
-
-Vậy đỉnh $I(1, -1)$
-
-**Bước 3:** Vẽ đồ thị
-- Đỉnh: $I(1, -1)$
-- Trục đối xứng: $x = 1$
-- Giao với trục tung: $(0, 1)$`)">📋 Sử dụng mẫu này</button>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="insertExample('full_example')">📋 Sử dụng mẫu này</button>
             </div>
         </div>
     </div>
@@ -981,73 +1134,74 @@ Vậy đỉnh $I(1, -1)$
         </div>
     </div>
 
+    <!-- Message Box HTML -->
+    <div id="messageBox" class="message-box">
+        <div class="message-box-content">
+            <span class="close-button" onclick="hideMessageBox()">&times;</span>
+            <p id="messageBoxText"></p>
+            <button class="btn btn-primary" onclick="hideMessageBox()">OK</button>
+        </div>
+    </div>
+
     <script>
         let slides = [];
         let currentSlide = 0;
-        let isFullscreen = false;
+        // isCustomOverlayActive will track if our custom fullscreen overlay is visible
+        // This covers both native fullscreen (where the overlay is the fullscreen element) and custom fallback.
+        let isCustomOverlayActive = false; 
 
-        function parseLatexToSlides(latexText) {
-            // Split by --- or # headers
-            const sections = latexText.split(/(?=^#|\n---\n)/m).filter(section => section.trim());
-            
-            return sections.map(section => {
-                const lines = section.trim().split('\n');
-                let title = 'Slide';
-                let content = section;
-                
-                // Extract title if starts with #
-                if (lines[0].startsWith('#')) {
-                    title = lines[0].replace(/^#+\s*/, '');
-                    content = lines.slice(1).join('\n').trim();
-                }
-                
-                // Process content for better formatting
-                content = processContent(content);
-                
-                return { title, content };
-            });
+        /**
+         * Hiển thị hộp thông báo tùy chỉnh.
+         * @param {string} message - Nội dung thông báo.
+         */
+        function showMessageBox(message) {
+            document.getElementById('messageBoxText').textContent = message;
+            document.getElementById('messageBox').style.display = 'flex';
         }
 
-        function processContent(content) {
-            // Convert image URLs to img tags
-            content = content.replace(/https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp|svg)/gi, 
-                '<img src="$&" alt="Hình ảnh" onerror="this.style.display=\'none\'; this.nextSibling.textContent=\'[Không thể tải hình ảnh: $&]\'"><span></span>');
-            
-            // Process multiple choice questions
-            if (content.includes('A)') || content.includes('B)') || content.includes('C)') || content.includes('D)')) {
-                return processMultipleChoice(content);
-            }
-            
-            // Process true/false questions
-            if (content.includes('a)') || content.includes('b)') || content.includes('c)') || content.includes('d)')) {
-                return processTrueFalse(content);
-            }
-            
-            // Convert bullet points to proper list items
-            const lines = content.split('\n');
+        /**
+         * Ẩn hộp thông báo tùy chỉnh.
+         */
+        function hideMessageBox() {
+            document.getElementById('messageBox').style.display = 'none';
+        }
+
+        /**
+         * Xử lý văn bản cơ bản và danh sách (ul, ol, p).
+         * @param {string} text - Nội dung văn bản thô.
+         * @returns {string} Nội dung đã được xử lý thành HTML.
+         */
+        function processBasicTextAndLists(text) {
+            const lines = text.split('\n');
             let processedLines = [];
             let inList = false;
+            let listType = ''; // 'ul' or 'ol'
             
             for (let line of lines) {
                 line = line.trim();
                 
                 // Check if line starts with bullet point
                 if (line.match(/^[-*•]\s+/)) {
-                    if (!inList) {
+                    if (!inList || listType !== 'ul') {
+                        if (inList) processedLines.push(`</${listType}>`);
                         processedLines.push('<ul>');
                         inList = true;
+                        listType = 'ul';
                     }
                     processedLines.push('<li>' + line.replace(/^[-*•]\s+/, '') + '</li>');
                 } else if (line.match(/^\d+\.\s+/)) {
-                    if (!inList) {
+                    if (!inList || listType !== 'ol') {
+                        if (inList) processedLines.push(`</${listType}>`);
                         processedLines.push('<ol>');
                         inList = true;
+                        listType = 'ol';
                     }
                     processedLines.push('<li>' + line.replace(/^\d+\.\s+/, '') + '</li>');
                 } else {
                     if (inList) {
-                        processedLines.push(inList === 'ul' ? '</ul>' : '</ol>');
+                        processedLines.push(`</${listType}>`);
                         inList = false;
+                        listType = '';
                     }
                     if (line) {
                         processedLines.push('<p>' + line + '</p>');
@@ -1056,12 +1210,85 @@ Vậy đỉnh $I(1, -1)$
             }
             
             if (inList) {
-                processedLines.push('</ul>');
+                processedLines.push(`</${listType}>`);
             }
             
             return processedLines.join('\n');
         }
 
+        /**
+         * Phân tích cú pháp LaTeX từ chuỗi đầu vào để tạo các slide.
+         * @param {string} latexText - Chuỗi LaTeX đầu vào.
+         * @returns {Array<Object>} Mảng các đối tượng slide, mỗi đối tượng có title và content.
+         */
+        function parseLatexToSlides(latexText) {
+            // Tách các phần bằng --- hoặc tiêu đề #
+            const sections = latexText.split(/(?=^#|\n---\n)/m).filter(section => section.trim());
+            
+            return sections.map(section => {
+                const lines = section.trim().split('\n');
+                let title = 'Slide';
+                let content = section;
+                
+                // Trích xuất tiêu đề nếu bắt đầu bằng #
+                if (lines[0].startsWith('#')) {
+                    title = lines[0].replace(/^#+\s*/, '');
+                    content = lines.slice(1).join('\n').trim();
+                }
+                
+                // Xử lý nội dung để định dạng tốt hơn
+                content = processContent(content);
+                
+                return { title, content };
+            });
+        }
+
+        /**
+         * Xử lý nội dung slide để chuyển đổi hình ảnh, câu hỏi trắc nghiệm, danh sách và lời giải.
+         * @param {string} content - Nội dung thô của slide.
+         * @returns {string} Nội dung đã được xử lý thành HTML.
+         */
+        function processContent(content) {
+            // 1. Handle solution blocks first
+            // Updated regex to match [SOLUTION_START] and [SOLUTION_END]
+            content = content.replace(/\[SOLUTION_START\]([\s\S]*?)\[SOLUTION_END\]/g, (match, solutionContent) => {
+                const solutionId = 'sol' + Math.random().toString(36).substr(2, 9);
+                // Process the solution content itself for basic text/lists/paragraphs
+                const processedSolutionInner = processBasicTextAndLists(solutionContent);
+
+                return `
+                    <div class="solution-toggle-wrapper">
+                        <button class="btn btn-secondary toggle-solution-btn" onclick="toggleSolution('${solutionId}', this)">Hiện lời giải</button>
+                        <div id="${solutionId}" class="solution-box solution-content-hidden">
+                            ${processedSolutionInner}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 2. Convert image URLs to img tags
+            content = content.replace(/https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp|svg)/gi, 
+                '<img src="$&" alt="Hình ảnh" onerror="this.style.display=\'none\'; this.nextSibling.textContent=\'[Không thể tải hình ảnh: $&]\'"><span></span>');
+            
+            // 3. Process multiple choice questions (if applicable)
+            if (content.includes('A)') || content.includes('B)') || content.includes('C)') || content.includes('D)')) {
+                return processMultipleChoice(content);
+            }
+            
+            // 4. Process true/false questions (if applicable)
+            if (content.includes('a)') || content.includes('b)') || content.includes('c)') || content.includes('d)')) {
+                return processTrueFalse(content);
+            }
+            
+            // 5. If not a quiz, process as basic text and lists
+            return processBasicTextAndLists(content);
+        }
+
+        /**
+         * Xử lý nội dung để tạo câu hỏi trắc nghiệm.
+         * @param {string} content - Nội dung chứa câu hỏi trắc nghiệm.
+         * @returns {string} HTML của câu hỏi trắc nghiệm.
+         */
         function processMultipleChoice(content) {
             const lines = content.split('\n');
             let processedLines = [];
@@ -1075,7 +1302,7 @@ Vậy đỉnh $I(1, -1)$
                     const option = line.charAt(0);
                     const text = line.substring(2).trim();
                     
-                    // Check if this is the correct answer (marked with *)
+                    // Kiểm tra xem đây có phải là đáp án đúng không (được đánh dấu bằng *)
                     if (text.startsWith('*')) {
                         correctAnswer = option;
                         const cleanText = text.substring(1).trim();
@@ -1104,7 +1331,7 @@ Vậy đỉnh $I(1, -1)$
                 }
             }
             
-            // Add check answer button
+            // Thêm nút kiểm tra đáp án
             processedLines.push(`
                 <div class="quiz-controls">
                     <button class="btn btn-primary quiz-check" onclick="checkMultipleChoice('${questionId}', '${correctAnswer}')">
@@ -1117,6 +1344,11 @@ Vậy đỉnh $I(1, -1)$
             return '<div class="quiz-container">' + processedLines.join('\n') + '</div>';
         }
 
+        /**
+         * Xử lý nội dung để tạo câu hỏi đúng/sai.
+         * @param {string} content - Nội dung chứa câu hỏi đúng/sai.
+         * @returns {string} HTML của câu hỏi đúng/sai.
+         */
         function processTrueFalse(content) {
             const lines = content.split('\n');
             let processedLines = [];
@@ -1130,7 +1362,7 @@ Vậy đỉnh $I(1, -1)$
                     const option = line.charAt(0);
                     const text = line.substring(2).trim();
                     
-                    // Check if this is true (marked with *Đ) or false (marked with *S)
+                    // Kiểm tra xem đây là đúng (đánh dấu *Đ) hay sai (đánh dấu *S)
                     let isCorrect = null;
                     let cleanText = text;
                     
@@ -1164,7 +1396,7 @@ Vậy đỉnh $I(1, -1)$
                 }
             }
             
-            // Add check answer button
+            // Thêm nút kiểm tra đáp án
             processedLines.push(`
                 <div class="quiz-controls">
                     <button class="btn btn-primary quiz-check" onclick="checkTrueFalse('${questionId}', ${JSON.stringify(answers).replace(/"/g, '&quot;')})">
@@ -1177,11 +1409,14 @@ Vậy đỉnh $I(1, -1)$
             return '<div class="tf-container">' + processedLines.join('\n') + '</div>';
         }
 
+        /**
+         * Tạo các slide từ nội dung LaTeX trong ô nhập liệu.
+         */
         function generateSlides() {
             const latexInput = document.getElementById('latexInput').value.trim();
             
             if (!latexInput) {
-                alert('Vui lòng nhập nội dung LaTeX!');
+                showMessageBox('Vui lòng nhập nội dung LaTeX!');
                 return;
             }
 
@@ -1192,6 +1427,9 @@ Vậy đỉnh $I(1, -1)$
             updateSlideDisplay();
         }
 
+        /**
+         * Hiển thị các slide trong trình xem trước.
+         */
         function renderSlides() {
             const container = document.getElementById('slideContainer');
             container.innerHTML = '';
@@ -1206,21 +1444,26 @@ Vậy đỉnh $I(1, -1)$
                 container.appendChild(slideDiv);
             });
             
-            // Add footer
+            // Thêm footer
             const footer = document.createElement('div');
             footer.className = 'slide-footer';
             footer.textContent = 'Thầy Vũ Tiến Lực - Trường THPT Nguyễn Hữu Cảnh';
             container.appendChild(footer);
             
-            // Re-render MathJax
+            // Render lại MathJax
             if (window.MathJax) {
                 MathJax.typesetPromise([container]).catch(err => console.log(err));
             }
             
-            // Add staggered animation delays
+            // Thêm độ trễ hoạt ảnh so le
             addAnimationDelays();
         }
 
+        /**
+         * Thêm biểu tượng vào tiêu đề slide dựa trên từ khóa.
+         * @param {string} title - Tiêu đề slide.
+         * @returns {string} Tiêu đề slide có biểu tượng.
+         */
         function addIconToTitle(title) {
             const icons = {
                 'phương trình': '📐',
@@ -1230,7 +1473,7 @@ Vậy đỉnh $I(1, -1)$
                 'đạo hàm': '📈',
                 'tích phân': '∫',
                 'ma trận': '🔢',
-                'hình học': '📐',
+                'hình học': '�',
                 'đại số': '🔢',
                 'giải tích': '📈',
                 'toán học': '🧮',
@@ -1248,7 +1491,7 @@ Vậy đỉnh $I(1, -1)$
                 }
             }
             
-            // Default icon if no match
+            // Biểu tượng mặc định nếu không khớp
             if (iconTitle === title) {
                 iconTitle = '📌 ' + title;
             }
@@ -1256,6 +1499,9 @@ Vậy đỉnh $I(1, -1)$
             return iconTitle;
         }
 
+        /**
+         * Thêm độ trễ hoạt ảnh cho các phần tử nội dung slide.
+         */
         function addAnimationDelays() {
             const activeSlide = document.querySelector('.slide.active');
             if (activeSlide) {
@@ -1266,6 +1512,9 @@ Vậy đỉnh $I(1, -1)$
             }
         }
 
+        /**
+         * Cập nhật hiển thị slide hiện tại.
+         */
         function updateSlideDisplay() {
             const slideElements = document.querySelectorAll('.slide');
             slideElements.forEach((slide, index) => {
@@ -1275,12 +1524,15 @@ Vậy đỉnh $I(1, -1)$
             document.getElementById('slideCounter').textContent = 
                 `Slide ${currentSlide + 1} / ${slides.length}`;
             
-            // Add animation delays for new active slide
+            // Thêm độ trễ hoạt ảnh cho slide mới đang hoạt động
             setTimeout(() => {
                 addAnimationDelays();
             }, 100);
         }
 
+        /**
+         * Chuyển đến slide tiếp theo.
+         */
         function nextSlide() {
             if (currentSlide < slides.length - 1) {
                 currentSlide++;
@@ -1288,6 +1540,9 @@ Vậy đỉnh $I(1, -1)$
             }
         }
 
+        /**
+         * Chuyển đến slide trước đó.
+         */
         function previousSlide() {
             if (currentSlide > 0) {
                 currentSlide--;
@@ -1295,26 +1550,92 @@ Vậy đỉnh $I(1, -1)$
             }
         }
 
+        /**
+         * Chuyển sang chế độ trình chiếu toàn màn hình.
+         */
         function enterFullscreen() {
             if (slides.length === 0) {
-                alert('Vui lòng tạo slide trước!');
+                showMessageBox('Vui lòng tạo slide trước!');
                 return;
             }
             
-            isFullscreen = true;
-            document.getElementById('fullscreenSection').style.display = 'block';
-            updateFullscreenSlide();
+            const elem = document.getElementById('fullscreenSection');
             
-            // Hide scrollbars
-            document.body.style.overflow = 'hidden';
+            // Try to enter native fullscreen
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().then(() => {
+                    // Successfully entered native fullscreen
+                    // UI state will be updated by fullscreenchange listener
+                }).catch(err => {
+                    // Native fullscreen failed (e.g., not allowed, user denied)
+                    console.error("Failed to enter native fullscreen:", err);
+                    // Fallback to custom overlay if native fails
+                    isCustomOverlayActive = true;
+                    elem.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    showMessageBox('Trình duyệt của bạn không hỗ trợ chế độ toàn màn hình gốc hoặc yêu cầu bị từ chối. Đang sử dụng chế độ toàn màn hình tùy chỉnh.');
+                });
+            } else {
+                // Browser does not support native fullscreen API
+                isCustomOverlayActive = true;
+                elem.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                showMessageBox('Trình duyệt của bạn không hỗ trợ chế độ toàn màn hình gốc. Đang sử dụng chế độ toàn màn hình tùy chỉnh.');
+            }
+            updateFullscreenSlide(); // Always update the content
         }
 
+        /**
+         * Thoát chế độ trình chiếu toàn màn hình.
+         */
         function exitFullscreen() {
-            isFullscreen = false;
-            document.getElementById('fullscreenSection').style.display = 'none';
-            document.body.style.overflow = 'auto';
+            const elem = document.getElementById('fullscreenSection');
+
+            // If currently in native fullscreen (our element is the fullscreen element)
+            if (document.fullscreenElement === elem) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(err => {
+                        console.error("Failed to exit native fullscreen:", err);
+                        // If exiting native fullscreen fails, fallback to hiding custom overlay
+                        isCustomOverlayActive = false;
+                        elem.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    });
+                } else {
+                    // Fallback for older browsers that don't support exitFullscreen, but might have entered.
+                    // Or if document.exitFullscreen is not available, just hide our custom overlay.
+                    isCustomOverlayActive = false;
+                    elem.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            } else if (isCustomOverlayActive) {
+                // If not in native fullscreen, but our custom overlay is visible, hide it.
+                isCustomOverlayActive = false;
+                elem.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         }
 
+        // Centralized handler for fullscreen state changes (native)
+        document.addEventListener('fullscreenchange', () => {
+            const fullscreenSection = document.getElementById('fullscreenSection');
+            if (document.fullscreenElement === fullscreenSection) {
+                // Element entered native fullscreen
+                isCustomOverlayActive = true;
+                fullscreenSection.style.display = 'flex'; // Ensure visible
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Element exited native fullscreen (or another element entered)
+                isCustomOverlayActive = false;
+                fullscreenSection.style.display = 'none'; // Hide our custom overlay
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+
+        /**
+         * Cập nhật nội dung slide trong chế độ toàn màn hình.
+         */
         function updateFullscreenSlide() {
             if (slides.length === 0) return;
             
@@ -1325,12 +1646,12 @@ Vậy đỉnh $I(1, -1)$
                 <div class="slide-content">${slide.content}</div>
             `;
             
-            // Re-render MathJax for fullscreen
+            // Render lại MathJax cho toàn màn hình
             if (window.MathJax) {
                 MathJax.typesetPromise([fullscreenSlide]).catch(err => console.log(err));
             }
             
-            // Add animation delays for fullscreen
+            // Thêm độ trễ hoạt ảnh cho toàn màn hình
             setTimeout(() => {
                 const elements = fullscreenSlide.querySelectorAll('.slide-content p, .slide-content li');
                 elements.forEach((element, index) => {
@@ -1339,81 +1660,101 @@ Vậy đỉnh $I(1, -1)$
             }, 100);
         }
 
+        /**
+         * Chuyển đến slide tiếp theo trong chế độ toàn màn hình.
+         */
         function fullscreenNext() {
             if (currentSlide < slides.length - 1) {
                 currentSlide++;
                 updateFullscreenSlide();
-                updateSlideDisplay(); // Update preview too
+                updateSlideDisplay(); // Cập nhật cả bản xem trước
             }
         }
 
+        /**
+         * Chuyển đến slide trước đó trong chế độ toàn màn hình.
+         */
         function fullscreenPrevious() {
             if (currentSlide > 0) {
                 currentSlide--;
                 updateFullscreenSlide();
-                updateSlideDisplay(); // Update preview too
+                updateSlideDisplay(); // Cập nhật cả bản xem trước
             }
         }
 
+        /**
+         * Xóa nội dung trong ô nhập liệu LaTeX.
+         */
         function clearInput() {
             document.getElementById('latexInput').value = '';
         }
 
-        function loadExample() {
-            const exampleLatex = `# Phương trình bậc hai
-Phương trình bậc hai có dạng tổng quát:
-$$ax^2 + bx + c = 0$$
-
-Với điều kiện: $a \\neq 0$
-
-Các thành phần của phương trình:
-- $a$: hệ số của $x^2$ (khác 0)
-- $b$: hệ số của $x$
-- $c$: hằng số tự do
-
----
-
-# Công thức nghiệm
-Nghiệm của phương trình bậc hai được tính theo công thức:
-$$x_{1,2} = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$$
-
-Trong đó biệt thức: $\\Delta = b^2 - 4ac$
-
-Các trường hợp:
-- $\\Delta > 0$: phương trình có 2 nghiệm phân biệt
-- $\\Delta = 0$: phương trình có nghiệm kép
-- $\\Delta < 0$: phương trình vô nghiệm (trong tập số thực)
-
----
-
-# Ví dụ minh họa
-Giải phương trình: $x^2 - 5x + 6 = 0$
-
-Bước 1: Xác định các hệ số
-- $a = 1$
-- $b = -5$ 
-- $c = 6$
-
-Bước 2: Tính biệt thức
-$\\Delta = (-5)^2 - 4 \\cdot 1 \\cdot 6 = 25 - 24 = 1 > 0$
-
-Bước 3: Tính nghiệm
-$x_1 = \\frac{5 + 1}{2} = 3$
-
-$x_2 = \\frac{5 - 1}{2} = 2$
-
-Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
-            
-            document.getElementById('latexInput').value = exampleLatex;
+        /**
+         * Tải một ví dụ LaTeX vào ô nhập liệu.
+         * @param {string} exampleId - ID của ví dụ LaTeX cần tải.
+         */
+        function loadExample(exampleId) {
+            document.getElementById('latexInput').value = latexExamples[exampleId];
+            generateSlides(); // Tự động tạo slide sau khi tải ví dụ
         }
 
-        function insertExample(latexText) {
-            document.getElementById('latexInput').value = latexText;
+        /**
+         * Chèn một ví dụ LaTeX vào ô nhập liệu.
+         * @param {string} exampleId - ID của ví dụ LaTeX cần chèn.
+         */
+        function insertExample(exampleId) {
+            document.getElementById('latexInput').value = latexExamples[exampleId];
+            generateSlides(); // Tự động tạo slide sau khi chèn ví dụ
         }
 
-        // Keyboard shortcuts
+        /**
+         * Cố gắng sửa lỗi dấu gạch chéo ngược đơn thành đôi trong LaTeX.
+         * Lưu ý: Hàm này có thể không hoàn hảo cho mọi trường hợp phức tạp
+         * và tốt nhất người dùng vẫn nên gõ `\\` trực tiếp.
+         */
+        function fixLatexBackslashes() {
+            let latexInput = document.getElementById('latexInput');
+            let content = latexInput.value;
+
+            // Regex này khớp với một dấu gạch chéo ngược đơn mà KHÔNG theo sau bởi một dấu gạch chéo ngược khác.
+            // Nó sẽ thay thế '\' thành '\\' nhưng không ảnh hưởng đến '\\'.
+            content = content.replace(/\\(?!\\)/g, '\\\\');
+
+            latexInput.value = content;
+            showMessageBox('Đã cố gắng sửa lỗi dấu gạch chéo ngược. Vui lòng kiểm tra lại công thức và nhấn "Tạo Slide" nếu chưa tự động cập nhật.');
+            generateSlides(); // Tự động tạo slide sau khi sửa
+        }
+
+        /**
+         * Toggles the visibility of a solution section.
+         * @param {string} solutionId - The ID of the solution content div.
+         * @param {HTMLElement} buttonElement - The button element that triggered the toggle.
+         */
+        function toggleSolution(solutionId, buttonElement) {
+            const solutionContent = document.getElementById(solutionId);
+            if (solutionContent) {
+                const isHidden = solutionContent.classList.contains('solution-content-hidden');
+                if (isHidden) {
+                    solutionContent.classList.remove('solution-content-hidden');
+                    solutionContent.classList.add('solution-content-visible');
+                    buttonElement.textContent = 'Ẩn lời giải';
+                    // Re-render MathJax for the newly visible content
+                    if (window.MathJax) {
+                        MathJax.typesetPromise([solutionContent]).catch(err => console.log(err));
+                    }
+                } else {
+                    solutionContent.classList.remove('solution-content-visible');
+                    solutionContent.classList.add('solution-content-hidden');
+                    buttonElement.textContent = 'Hiện lời giải';
+                }
+            }
+        }
+
+
+        // Phím tắt bàn phím
         document.addEventListener('keydown', function(e) {
-            if (isFullscreen) {
+            // Only act if our custom overlay is active
+            if (isCustomOverlayActive) {
                 if (e.key === 'ArrowRight' || e.key === ' ') {
                     e.preventDefault();
                     fullscreenNext();
@@ -1421,13 +1762,23 @@ Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
                     e.preventDefault();
                     fullscreenPrevious();
                 } else if (e.key === 'Escape') {
-                    e.preventDefault();
-                    exitFullscreen();
+                    // If native fullscreen, browser handles Esc. fullscreenchange listener will update `isCustomOverlayActive`.
+                    // If custom fallback, we handle Esc.
+                    if (!document.fullscreenElement) { // If not in native fullscreen, we are in custom overlay
+                        e.preventDefault(); // Prevent default browser Esc behavior if in custom overlay
+                        exitFullscreen(); // Hide custom overlay
+                    }
+                    // If in native fullscreen, we let the browser handle Esc, and the fullscreenchange listener will update our UI.
                 }
             }
         });
 
-        // Quiz Functions
+        // Chức năng Quiz
+        /**
+         * Kiểm tra đáp án câu hỏi trắc nghiệm.
+         * @param {string} questionId - ID của câu hỏi.
+         * @param {string} correctAnswer - Đáp án đúng.
+         */
         function checkMultipleChoice(questionId, correctAnswer) {
             const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
             const resultDiv = document.getElementById(`result_${questionId}`);
@@ -1441,32 +1792,41 @@ Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
             const selectedValue = selectedOption.value;
             const isCorrect = selectedValue === correctAnswer;
             
-            // Reset all option styles
+            // Đặt lại tất cả kiểu tùy chọn
             allOptions.forEach(option => {
                 const optionDiv = option.closest('.quiz-option');
                 optionDiv.classList.remove('correct-selected', 'incorrect-selected', 'show-correct');
             });
             
-            // Style the selected option
+            // Tạo kiểu cho tùy chọn đã chọn
             const selectedDiv = selectedOption.closest('.quiz-option');
             if (isCorrect) {
                 selectedDiv.classList.add('correct-selected');
                 resultDiv.innerHTML = '<div class="quiz-result correct">✅ Chính xác! Bạn đã chọn đúng đáp án.</div>';
             } else {
                 selectedDiv.classList.add('incorrect-selected');
-                // Show the correct answer
+                // Hiển thị đáp án đúng
                 const correctDiv = document.querySelector(`input[name="${questionId}"][value="${correctAnswer}"]`).closest('.quiz-option');
-                correctDiv.classList.add('show-correct');
+                if (correctDiv) { // Ensure correctDiv exists before adding class
+                    correctDiv.classList.add('show-correct');
+                }
                 resultDiv.innerHTML = `<div class="quiz-result incorrect">❌ Sai rồi! Đáp án đúng là ${correctAnswer}.</div>`;
             }
             
-            // Disable the button after checking
+            // Vô hiệu hóa nút sau khi kiểm tra
             const button = document.querySelector(`button[onclick*="${questionId}"]`);
-            button.disabled = true;
-            button.textContent = '✓ Đã kiểm tra';
-            button.style.opacity = '0.6';
+            if (button) { // Ensure button exists
+                button.disabled = true;
+                button.textContent = '✓ Đã kiểm tra';
+                button.style.opacity = '0.6';
+            }
         }
 
+        /**
+         * Kiểm tra đáp án câu hỏi đúng/sai.
+         * @param {string} questionId - ID của câu hỏi.
+         * @param {Object} correctAnswers - Đối tượng chứa các đáp án đúng cho từng mệnh đề.
+         */
         function checkTrueFalse(questionId, correctAnswers) {
             const questions = document.querySelectorAll(`[data-option]`);
             const resultDiv = document.getElementById(`result_${questionId}`);
@@ -1474,7 +1834,7 @@ Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
             let correctCount = 0;
             let allAnswered = true;
             
-            // Parse correct answers if it's a string
+            // Phân tích đáp án đúng nếu là chuỗi
             if (typeof correctAnswers === 'string') {
                 correctAnswers = JSON.parse(correctAnswers.replace(/&quot;/g, '"'));
             }
@@ -1495,20 +1855,20 @@ Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
                 const correctValue = correctAnswers[option];
                 const isCorrect = selectedValue === correctValue;
                 
-                // Reset styles
+                // Đặt lại kiểu
                 const tfOptions = questionDiv.querySelectorAll('.tf-option');
                 tfOptions.forEach(opt => {
                     opt.classList.remove('correct-tf-selected', 'incorrect-tf-selected', 'show-correct-tf');
                 });
                 
-                // Style the selected option
+                // Tạo kiểu cho tùy chọn đã chọn
                 const selectedLabel = selectedInput.closest('.tf-option');
                 if (isCorrect) {
                     selectedLabel.classList.add('correct-tf-selected');
                     correctCount++;
                 } else {
                     selectedLabel.classList.add('incorrect-tf-selected');
-                    // Show correct answer
+                    // Hiển thị đáp án đúng
                     const correctInput = document.querySelector(`input[name="${questionId}_${option}"][value="${correctValue}"]`);
                     if (correctInput) {
                         correctInput.closest('.tf-option').classList.add('show-correct-tf');
@@ -1521,7 +1881,7 @@ Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
                 return;
             }
             
-            // Show results
+            // Hiển thị kết quả
             if (correctCount === totalQuestions) {
                 resultDiv.innerHTML = `<div class="quiz-result correct">🎉 Xuất sắc! Bạn trả lời đúng ${correctCount}/${totalQuestions} câu!</div>`;
             } else if (correctCount > totalQuestions / 2) {
@@ -1530,15 +1890,22 @@ Vậy phương trình có hai nghiệm: $x_1 = 3$ và $x_2 = 2$`;
                 resultDiv.innerHTML = `<div class="quiz-result incorrect">📚 Cần ôn tập thêm! Bạn trả lời đúng ${correctCount}/${totalQuestions} câu.</div>`;
             }
             
-            // Disable the button after checking
+            // Vô hiệu hóa nút sau khi kiểm tra
             const button = document.querySelector(`button[onclick*="${questionId}"]`);
-            button.disabled = true;
-            button.textContent = '✓ Đã kiểm tra';
-            button.style.opacity = '0.6';
+            if (button) { // Ensure button exists
+                button.disabled = true;
+                button.textContent = '✓ Đã kiểm tra';
+                button.style.opacity = '0.6';
+            }
         }
 
-        // Initialize with welcome slide
+        // Khởi tạo với slide chào mừng
         slides = [{ title: 'Chào mừng! 👋', content: 'Nhập nội dung LaTeX để bắt đầu.' }];
+        // Tải slide chào mừng khi trang được tải
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExample('default'); // Load default example on page load
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab918dd0655f59',t:'MTc1NDQ1MjIxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
+�
