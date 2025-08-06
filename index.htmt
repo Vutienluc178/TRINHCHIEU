@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trình chiếu bài giảng</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- MathJax cho công thức Toán -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Trình chiếu bài giảng</h1>
+    </header>
+    <main>
+        <section id="slideShowTab">
+            <div id="slideArea">
+                <!-- Nội dung slide sẽ hiện ở đây -->
+            </div>
+            <div class="slide-controls">
+                <button onclick="prevSlide()" class="btn btn-sm">◀ Trước</button>
+                <button onclick="nextSlide()" class="btn btn-sm">Tiếp ▶</button>
+                <span id="slideIndex" style="margin-left:1.3rem;"></span>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
